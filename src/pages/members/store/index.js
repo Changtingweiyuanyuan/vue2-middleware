@@ -2,12 +2,14 @@ import { MUTATIONS } from "./mutations";
 import { ACTIONS } from "./actions";
 import { GETTERS } from "./getters";
 
+export const STATE = {
+  list: [],
+};
+
 export default {
   namespaced: true,
-  state: {
-    example: "base",
-  },
-  mutations: MUTATIONS,
+  state: STATE,
   actions: ACTIONS,
+  mutations: MUTATIONS,
   getters: GETTERS,
 };

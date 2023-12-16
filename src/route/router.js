@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Base from '@/pages/base/Index.vue';
+import Members from '@/pages/members/Index.vue';
 
 Vue.use(Router);
 
@@ -10,8 +10,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'base',
-      component: Base,
+      name: 'members',
+      component: Members,
     },
   ],
 });
