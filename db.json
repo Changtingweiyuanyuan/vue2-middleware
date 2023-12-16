@@ -1,0 +1,52 @@
+{
+    "members": [
+        {
+            "id": 1,
+            "name": "Chelsea",
+            "cart": [
+                {
+                    "id": 1,
+                    "name": "iPhone15",
+                    "price": 22000,
+                    "quantity": 1
+                },
+                {
+                    "id": 2,
+                    "name": "iPhone15 Plus",
+                    "price": 28000,
+                    "quantity": 2
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Kerwin",
+            "cart": [
+                {
+                    "id": 1,
+                    "name": "iPhone14",
+                    "price": 19900,
+                    "quantity": 1
+                },
+                {
+                    "id": 2,
+                    "name": "iPhone15 Plus",
+                    "price": 28000,
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Jay",
+            "cart": [
+                {
+                    "id": 1,
+                    "name": "iPhone15",
+                    "price": 22000,
+                    "quantity": 3
+                }
+            ]
+        }
+    ]
+}
