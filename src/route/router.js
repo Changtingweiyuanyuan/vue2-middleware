@@ -1,17 +1,84 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Members from '@/pages/members/Index.vue';
+import Vue from "vue";
+import Router from "vue-router";
+import store from "@/store";
+import pipelineMiddleware from "@/middleware/pipeline";
+import { checkMembersMiddleware } from "@/middleware/members";
+import { checkBooksMiddleware } from "@/middleware/books";
+import { checkRentedBooksMiddleware } from "@/middleware/rentedBooks";
+import Members from "@/pages/members/Index.vue";
+import Books from "@/pages/books/Index.vue";
+import RentedBooks from "@/pages/rentedBooks/Index.vue";
 
 Vue.use(Router);
 
-export default new Router({
-  mode: 'history',
+const router = new Router({
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'members',
+      path: "/",
+      name: "members",
       component: Members,
+      meta: {
+        middleware: [checkMembersMiddleware],
+        title: "會員資訊",
+      },
+    },
+    {
+      path: "/books",
+      name: "books",
+      component: Books,
+      meta: {
+        middleware: [checkMembersMiddleware, checkBooksMiddleware, checkRentedBooksMiddleware],
+        title: "所有書籍資訊",
+      },
+    },
+    {
+      path: "/rentedBooks",
+      name: "rentedBooks",
+      component: RentedBooks,
+      meta: {
+        middleware: [checkMembersMiddleware, checkRentedBooksMiddleware],
+        title: "已租借書籍資訊",
+      },
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (!to.meta.middleware) {
+    return next();
+  }
+  if (to.meta.title) {
+    window.document.title = to.meta.title;
+  }
+
+  const middleware = to.matched.reduce((acc, route) => {
+    if (route.meta.middleware) {
+      acc = [...acc, ...route.meta.middleware];
+    }
+    return acc;
+  }, []);
+  if (!middleware.length) return next();
+
+  console.log("此路由會經過的所有middleware", middleware);
+
+  // 使用者若尚未登入，存即將進入的路由進cookies
+  // if (to.fullPath !== "/login") {
+  //   window.$cookies.set("redirectUrl", to.fullPath);
+  // }
+
+  const context = {
+    to,
+    from,
+    next,
+    store,
+  };
+
+  return middleware[0]({
+    ...context,
+    pipe: pipelineMiddleware(context, middleware, 1),
+  });
+});
+
+export default router;

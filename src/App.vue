@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <router-link class="router-link" to="/">會員資訊</router-link>｜
-    <router-link class="router-link" to="/cart">購物車</router-link>
+    <router-link class="router-link" to="/books">所有書籍資訊</router-link>｜
+    <router-link class="router-link" to="/rentedBooks"
+      >已租借書籍資訊</router-link
+    >
     <router-view />
   </div>
 </template>
@@ -9,8 +12,7 @@
 <script>
 export default {
   name: "App",
-  components: {
-  },
+  components: {},
 };
 </script>
 

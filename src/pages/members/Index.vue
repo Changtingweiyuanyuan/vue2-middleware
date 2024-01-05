@@ -11,20 +11,16 @@ import { mapState, mapActions } from "vuex";
 import { TYPES as ACTIONS_TYPES } from "@/pages/members/store/actions";
 export default {
   name: "PageMembers",
-  data() {
-    return {
-      members: [],
-    };
-  },
   computed: {
     ...mapState({
       _staMembers: (state) => state.members.list,
     }),
   },
   mounted() {
-    this._actGetMembers().then(() => {
-      console.log(this._staMembers);
-    });
+    console.log("members page: ", this._staMembers);
+    // this._actGetMembers().then(() => {
+    //   console.log(this._staMembers);
+    // });
   },
   methods: {
     ...mapActions({

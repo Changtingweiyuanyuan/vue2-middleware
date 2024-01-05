@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import members from "@/pages/members/store/index";
+import books from "@/pages/books/store/index";
+import rentedBooks from "@/pages/rentedBooks/store/index";
 
 Vue.use(Vuex);
 
@@ -22,6 +24,8 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    members
+    members,
+    books,
+    rentedBooks
   },
 });
