@@ -1,5 +1,5 @@
 {
-  "name": "vue-components-form",
+  "name": "vue2-middleware",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -26,7 +26,8 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "vue-template-compiler": "^2.7.15"
+    "vue-template-compiler": "^2.7.15",
+    "vue2-components": "git+ssh:git@github.com:Changtingweiyuanyuan/vue2-components.git"
   },
   "eslintConfig": {
     "root": true,
