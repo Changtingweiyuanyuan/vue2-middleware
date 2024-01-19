@@ -5,7 +5,7 @@ function resolve(dir) {
 }
 
 module.exports = defineConfig({
-  transpileDependencies: true,
+  transpileDependencies: [/node_modules[/\\\\]vue2-components[/\\\\]/],
   lintOnSave: false,
   chainWebpack: (config) => {
     config.resolve.alias

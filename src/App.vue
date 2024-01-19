@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="d-flex flex-column">
-    <div class="nav h5">
+    <div class="nav h6">
       <div class="nav__logo px-4 py-1">
         <img src="@/assets/logo.png" />
       </div>
@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "vue2-components.styles/global.import.scss";
 
 $background: #eef7f2;
@@ -38,7 +38,7 @@ $background: #eef7f2;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: $gray-900;
-  height: 100vh;
+  min-height: 100vh;
   background: $background;
 
   .nav {
