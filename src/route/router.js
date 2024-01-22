@@ -44,7 +44,7 @@ const router = new Router({
       name: "members",
       component: Members,
       meta: {
-        middleware: [checkMembersMiddleware],
+        middleware: [checkMembersMiddleware, checkRentedBooksMiddleware],
         title: "會員資訊",
       },
     },

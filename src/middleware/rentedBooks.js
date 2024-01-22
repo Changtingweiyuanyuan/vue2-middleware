@@ -1,13 +1,11 @@
-export const checkRentedBooksMiddleware = ({ next, store, pipe }) => {
-  console.log("checkRentedBooksMiddleware 是否有會員資料", store.state.members.list);
-  console.log("checkRentedBooksMiddleware 是否有已租借書籍資料", store.state.rentedBooks.list);
-  if (store.state.books.list.length) {
-    console.log("已經有已租借書籍資料了，直接進行下個middleware");
+export const checkRentedBooksMiddleware = ({ next, store, pipe, router }) => {
+  if (store.state.rentedBooks.list.length) {
+    router.app.$toast.success("rentedBooks store已有租借書籍資料");
     return pipe();
   } else {
-    console.log("沒有已租借書籍資料 -> call api");
+    router.app.$toast.warning("rentedBooks store為空，call books/getRentedBooks");
     store
-      .dispatch("books/getRentedBooks")
+      .dispatch("rentedBooks/getRentedBooks")
       .then(() => {
         return pipe();
       })

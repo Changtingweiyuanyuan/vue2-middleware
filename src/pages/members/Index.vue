@@ -32,11 +32,19 @@
           />
           <img v-else src="@/assets/icons/cancel.png" />
         </div>
-        <div class="members__list__card--rented-book">
+        <div class="members__list__card--rented-book-count">
           <span class="field rounded text-white me-2 h6">
             {{ MEMBER_CARD_FIELDS.RENTED_BOOK_COUNT }}
           </span>
           {{ members.rented_book_count }}
+        </div>
+        <div
+          v-if="members.rented_book_count"
+          class="members__list__card--rented-book-info"
+        >
+          <span class="field rounded text-white me-2 h6 cursor-pointer">
+            {{ MEMBER_CARD_FIELDS.RENTED_BOOK_INFO }}
+          </span>
         </div>
       </div>
     </div>
@@ -52,6 +60,7 @@ export default {
   computed: {
     ...mapState({
       _staMembers: (state) => state.members.list,
+      _staRentedBooks: (state) => state.rentedBooks.list,
     }),
   },
   data() {
@@ -61,10 +70,11 @@ export default {
   },
   mounted() {
     console.log("members page: ", this._staMembers);
+    console.log("rentedBooks page: ", this._staRentedBooks);
     // this._actGetMembers().then(() => {
     //   console.log(this._staMembers);
     // });
-    this.$toast.success("成功");
+    // this.$toast.success("成功");
   },
   methods: {
     ...mapActions({
@@ -98,15 +108,23 @@ export default {
       @include media-breakpoint-up(sm) {
         width: 230px;
       }
+      .field {
+        background: $morandi-green;
+        padding: 2px 4px;
+      }
       &--rented-status {
         img {
           width: 20px;
           height: 20px;
         }
       }
-      .field {
-        background: $morandi-green;
-        padding: 2px 4px;
+      &--rented-book-info {
+        .field {
+          background: $orange;
+          &:hover {
+            box-shadow: 1px 1px 1px $success;
+          }
+        }
       }
     }
   }
