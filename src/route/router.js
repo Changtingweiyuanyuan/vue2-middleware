@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import store from "@/store";
+import Toast from 'vue-toastification'
 import pipelineMiddleware from "@/middleware/pipeline";
 import { checkMembersMiddleware } from "@/middleware/members";
 import { checkBooksMiddleware } from "@/middleware/books";
@@ -10,6 +11,29 @@ import Books from "@/pages/books/Index.vue";
 import RentedBooks from "@/pages/rentedBooks/Index.vue";
 
 Vue.use(Router);
+
+// middleware中使用toast
+Vue.use(Toast, {
+  transition: "Vue-Toastification__bounce",
+  maxToasts: 3,
+  newestOnTop: true,
+  position: "bottom-right",
+  timeout: 5000,
+  closeOnClick: true,
+  pauseOnFocusLoss: true,
+  pauseOnHover: false,
+  draggable: true,
+  draggablePercent: 0.7,
+  showCloseButtonOnHover: false,
+  hideProgressBar: true,
+  closeButton: false,
+  icon: {
+    iconClass: "vm-toast-icon",
+    iconChildren: "",
+    iconTag: "i"
+  },
+  rtl: false
+});
 
 const router = new Router({
   mode: "history",
@@ -73,6 +97,7 @@ router.beforeEach((to, from, next) => {
     from,
     next,
     store,
+    router
   };
 
   return middleware[0]({

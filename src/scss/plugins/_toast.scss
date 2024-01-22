@@ -1,0 +1,34 @@
+$success-background: #feeec0;
+$warning-background: #ffe5e8;
+$body-text: #212529;
+$body-text-shadow: #eef7f2;
+.Vue-Toastification__toast {
+  min-width: 260px;
+  align-items: center;
+  padding: 12px 24px;
+  border: 1px solid #ced4da;
+  box-shadow: none;
+  .vm-toast-icon {
+    width: 30px;
+    height: 30px;
+    background-size: 30px 30px;
+    margin: auto 10px auto 0px;
+  }
+  &-body {
+    filter: drop-shadow(1px 1px 0px $body-text-shadow);
+    color: $body-text;
+    letter-spacing: .5px;
+  }
+  &--success {
+    background-color: $success-background;
+    .vm-toast-icon {
+      background-image: url('@/assets/icons/downloaded.png');
+    }
+  }
+  &--warning {
+    background-color: $warning-background;
+    .vm-toast-icon {
+      background-image: url('@/assets/icons/download.png');
+    }
+  }
+}

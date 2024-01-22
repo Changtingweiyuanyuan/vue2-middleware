@@ -1,10 +1,9 @@
-export const checkMembersMiddleware = ({ next, store, pipe }) => {
-  console.log("checkMembersMiddleware 是否有會員資料", store.state.members.list);
+export const checkMembersMiddleware = ({ next, store, pipe, router }) => {
   if (store.state.members.list.length) {
-    console.log("已經有會員資料了，直接進行下個middleware");
+    router.app.$toast.success("members store已有會員資料");
     return pipe();
   } else {
-    console.log("沒有會員資料 -> call api");
+    router.app.$toast.warning("members store為空，call members/getMembers");
     store
       .dispatch("members/getMembers")
       .then(() => {

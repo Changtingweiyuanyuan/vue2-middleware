@@ -64,6 +64,7 @@ export default {
     // this._actGetMembers().then(() => {
     //   console.log(this._staMembers);
     // });
+    this.$toast.success("成功");
   },
   methods: {
     ...mapActions({
