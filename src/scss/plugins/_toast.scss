@@ -1,7 +1,10 @@
 $success-background: #feeec0;
-$warning-background: #ffe5e8;
+$info-background: #c0e4fe;
+$warning-background: #eee5ff;
+$error-background: #ffe5e8;
 $body-text: #212529;
 $body-text-shadow: #eef7f2;
+$toast-tag: #d83b3b;
 .Vue-Toastification__toast {
   min-width: 260px;
   align-items: center;
@@ -17,18 +20,41 @@ $body-text-shadow: #eef7f2;
   &-body {
     filter: drop-shadow(1px 1px 0px $body-text-shadow);
     color: $body-text;
-    letter-spacing: .5px;
+    letter-spacing: 0.5px;
   }
-  &--success {
+  &--success,
+  &--info,
+  &--warning {
     background-color: $success-background;
+    &::after {
+      content: "checkMembersMiddleware";
+      position: absolute;
+      bottom: 0px;
+      right: 24px;
+      font-size: $font-size-xx-sm;
+      letter-spacing: 0.5px;
+      background: $toast-tag;
+      border-radius: $btn-border-radius;
+      padding: 0px 4px;
+    }
     .vm-toast-icon {
-      background-image: url('@/assets/icons/downloaded.png');
+      background-image: url("@/assets/icons/downloaded.png");
+    }
+  }
+  &--info {
+    &::after {
+      content: "checkBooksMiddleware";
     }
   }
   &--warning {
-    background-color: $warning-background;
+    &::after {
+      content: "checkRentedBooksMiddleware";
+    }
+  }
+  &--error {
+    background-color: $error-background;
     .vm-toast-icon {
-      background-image: url('@/assets/icons/download.png');
+      background-image: url("@/assets/icons/download.png");
     }
   }
 }
