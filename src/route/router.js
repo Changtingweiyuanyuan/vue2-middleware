@@ -44,7 +44,7 @@ const router = new Router({
       name: "members",
       component: Members,
       meta: {
-        middleware: [checkMembersMiddleware, checkRentedBooksMiddleware],
+        middleware: [checkMembersMiddleware, checkRentedBooksMiddleware, checkBooksMiddleware],
         title: "會員資訊",
       },
     },
@@ -53,7 +53,7 @@ const router = new Router({
       name: "books",
       component: Books,
       meta: {
-        middleware: [checkMembersMiddleware, checkBooksMiddleware, checkRentedBooksMiddleware],
+        middleware: [checkBooksMiddleware, checkRentedBooksMiddleware],
         title: "所有書籍資訊",
       },
     },

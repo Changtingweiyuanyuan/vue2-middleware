@@ -16,15 +16,27 @@
       <router-view />
     </div>
     <div class="footer mx-4 my-2 h6">
-      <marquee>文字</marquee>
+      <marquee>{{ MARQUEE_TEXT[this.$route.name] }}</marquee>
     </div>
   </div>
 </template>
 
 <script>
+const MARQUEE_TEXT = {
+  members:
+    "會員資訊頁面需預先載入'members'、'books' 以及 'rentedBooks' 三個資料表的資料",
+  books: "所有書籍頁面需預先載入'books'、'rentedBooks' 兩個資料表的資料",
+  rentedBooks:
+    "已租借書籍頁面需預先載入'books'、'rentedBooks' 兩個資料表的資料",
+};
 export default {
   name: "App",
   components: {},
+  data() {
+    return {
+      MARQUEE_TEXT,
+    };
+  },
 };
 </script>
 
@@ -39,6 +51,7 @@ $background: #eef7f2;
   text-align: center;
   color: $gray-900;
   min-height: 100vh;
+  height: 100%;
   background: $background;
 
   .nav {
@@ -47,14 +60,27 @@ $background: #eef7f2;
       border-right: 1px solid $gray-400;
     }
 
-    &__logo img {
-      width: 30px;
-      height: 30px;
+    &__logo {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid $gray-400;
+      @include media-breakpoint-up(sm) {
+        width: auto;
+        border-right: 1px solid $gray-400;
+        border-bottom: none;
+      }
+      img {
+        width: 30px;
+        height: 30px;
+      }
     }
   }
 
   .footer {
     color: $gray-600;
+    marquee {
+      margin-top: 120px;
+    }
   }
 
   a {
