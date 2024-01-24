@@ -32,7 +32,10 @@
           />
           <img v-else src="@/assets/icons/cancel.png" />
         </div>
-        <div class="members__list__card--rented-book-count">
+        <div
+          class="members__list__card--rented-book-count"
+          :class="{ 'mb-1': members.rented_book_count }"
+        >
           <span class="field rounded text-white me-2 h6">
             {{ MEMBER_CARD_FIELDS.RENTED_BOOK_COUNT }}
           </span>
@@ -40,11 +43,64 @@
         </div>
         <div
           v-if="members.rented_book_count"
-          class="members__list__card--rented-book-info"
+          class="members__list__card--rented-book-info position-relative"
         >
-          <span class="field rounded text-white me-2 h6 cursor-pointer">
+          <span
+            class="field rounded text-white me-2 h6 cursor-pointer"
+            @click="togglePopover(members.id)"
+          >
             {{ MEMBER_CARD_FIELDS.RENTED_BOOK_INFO }}
           </span>
+          <div
+            :ref="`popover-${members.id}`"
+            class="popover d-none position-absolute bg-white"
+          >
+            <div class="popover__main position-absolute bg-white rounded p-2">
+              <div
+                v-for="rentedBooks in getRentedBookInfo(members.id)"
+                :key="rentedBooks.id"
+                class="popover__main__book d-flex gap-4 pb-4"
+              >
+                <div class="image position-relative">
+                  <img
+                    :src="
+                      require('@/assets/booksImage/' +
+                        rentedBooks.book_id +
+                        '.jpeg')
+                    "
+                    class="position-relative"
+                  />
+                </div>
+                <div class="dividing-line position-relative"></div>
+                <div class="d-flex flex-column">
+                  <span class="title text-success t5 mb-1">
+                    {{ getBookName(rentedBooks.book_id) }}
+                  </span>
+                  <span class="t6">
+                    借閱日期<br />
+                    {{ rentedBooks.rental_date }}
+                  </span>
+                  <span class="t6">
+                    到期日期<br />
+                    <span
+                      :class="{
+                        'text-danger': isLessThanThreeDaysFromNow(
+                          rentedBooks.due_date
+                        ),
+                      }"
+                    >
+                      {{ rentedBooks.due_date }}
+                    </span>
+                    <img
+                      v-if="isLessThanThreeDaysFromNow(rentedBooks.due_date)"
+                      src="@/assets/icons/warning.png"
+                      class="icon--warning"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -60,6 +116,7 @@ export default {
   computed: {
     ...mapState({
       _staMembers: (state) => state.members.list,
+      _staBooks: (state) => state.books.list,
       _staRentedBooks: (state) => state.rentedBooks.list,
     }),
   },
@@ -69,8 +126,6 @@ export default {
     };
   },
   mounted() {
-    console.log("members page: ", this._staMembers);
-    console.log("rentedBooks page: ", this._staRentedBooks);
     // this._actGetMembers().then(() => {
     //   console.log(this._staMembers);
     // });
@@ -80,6 +135,33 @@ export default {
     ...mapActions({
       _actGetMembers: `members/${ACTIONS_TYPES.GET_MEMBERS}`,
     }),
+    togglePopover(id) {
+      const popovers = document.querySelectorAll(".popover");
+      const targetPopover = this.$refs[`popover-${id}`][0];
+      popovers.forEach((popover) => {
+        if (popover !== targetPopover) {
+          popover.classList.add("d-none");
+        }
+      });
+      targetPopover.classList.toggle("d-none");
+    },
+    getRentedBookInfo(memberId) {
+      const rentedBooks = this._staRentedBooks.filter(
+        (book) => book.user_id === memberId
+      );
+      return rentedBooks;
+    },
+    getBookName(bookId) {
+      const book = this._staBooks.find((book) => book.id === bookId);
+      return book.book_title;
+    },
+    isLessThanThreeDaysFromNow(date) {
+      const today = new Date();
+      const targetDate = new Date(date);
+      const diffTime = Math.abs(targetDate - today);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays < 7;
+    },
   },
 };
 </script>
@@ -123,6 +205,60 @@ export default {
           background: $orange;
           &:hover {
             box-shadow: 1px 1px 1px $success;
+          }
+        }
+        .popover {
+          width: 360px;
+          height: 160px;
+          top: calc(100% + 12px);
+          &::before {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 12px;
+            height: 12px;
+            background: $white;
+            border: 1px solid $gray-400;
+            top: -6px;
+            left: 12px;
+            transform: rotate(45deg);
+          }
+          &__main {
+            height: 158px;
+            overflow-y: scroll;
+            &__book {
+              .image {
+                &::before {
+                  content: "";
+                  position: absolute;
+                  display: block;
+                  width: 100px;
+                  height: 142px;
+                  border: 1px solid $gray-800;
+                  top: 4px;
+                  left: 4px;
+                  z-index: 0;
+                }
+                img {
+                  width: 100px;
+                  height: 142px;
+                  z-index: 1;
+                }
+              }
+              .dividing-line {
+                width: 1px;
+                height: 118px;
+                top: 12px;
+                background: $gray-400;
+              }
+              .title {
+                font-weight: $font-weight-semibold;
+              }
+              .icon--warning {
+                width: 20px;
+                height: 20px;
+              }
+            }
           }
         }
       }
