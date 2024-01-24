@@ -8,9 +8,17 @@
       <router-link class="router-link px-4 py-2" to="/books"
         >所有書籍資訊</router-link
       >
-      <router-link class="router-link px-4 py-2" to="/rentedBooks"
+      <!-- <router-link class="router-link px-4 py-2" to="/rentedBooks"
         >已租借書籍資訊</router-link
-      >
+      > -->
+      <div class="nav__statement flex-grow-1 px-4 py-2 border-none">
+        <span class="d-none d-sm-inline-block pe-1">
+          crafted by Chelsea Chang
+        </span>
+        <a :href="GIT_HUB_URL" target="_blank" class="cursor-pointer">
+          <img src="@/assets/icons/github.png" />
+        </a>
+      </div>
     </div>
     <div class="main flex-grow-1 container my-2">
       <router-view />
@@ -29,12 +37,15 @@ const MARQUEE_TEXT = {
   rentedBooks:
     "已租借書籍頁面需預先載入'books'、'rentedBooks' 兩個資料表的資料",
 };
+const GIT_HUB_URL = "https://github.com/Changtingweiyuanyuan";
+
 export default {
   name: "App",
   components: {},
   data() {
     return {
       MARQUEE_TEXT,
+      GIT_HUB_URL,
     };
   },
 };
@@ -56,7 +67,7 @@ $background: #eef7f2;
 
   .nav {
     border-bottom: 1px solid $gray-400;
-    & > * {
+    & > *:not(:last-child) {
       border-right: 1px solid $gray-400;
     }
 
@@ -72,6 +83,13 @@ $background: #eef7f2;
       img {
         width: 30px;
         height: 30px;
+      }
+    }
+    &__statement {
+      text-align: end;
+      img {
+        width: 20px;
+        height: 20px;
       }
     }
   }
