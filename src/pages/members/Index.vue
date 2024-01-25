@@ -4,7 +4,9 @@
       <span class="h4 text-success">會員資訊</span>
       <img src="@/assets/icons/star.png" />
     </div>
-    <div class="members__list d-flex flex-wrap gap-2">
+    <div
+      class="members__list d-flex flex-wrap justify-content-center gap-2 mt-4"
+    >
       <div
         v-for="members in _staMembers"
         :key="members.id"

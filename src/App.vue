@@ -6,7 +6,7 @@
       </div>
       <router-link class="router-link px-4 py-2" to="/">會員資訊</router-link>
       <router-link class="router-link px-4 py-2" to="/books"
-        >所有書籍資訊</router-link
+        >所有可借閱書籍</router-link
       >
       <!-- <router-link class="router-link px-4 py-2" to="/rentedBooks"
         >已租借書籍資訊</router-link
