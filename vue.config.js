@@ -35,4 +35,5 @@ module.exports = defineConfig({
       },
     },
   },
+  publicPath: "/vue2-middleware/" // 根目錄為github pages上傳的網域
 });
